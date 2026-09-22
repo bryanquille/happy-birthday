@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Baloo 2", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Quicksand", "Segoe UI", system-ui, sans-serif;
+
+  --animate-bob: bob 4s ease-in-out infinite;
+  --animate-pop-in: pop-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-twinkle: twinkle 2.4s ease-in-out infinite;
+
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 0.2;
+      transform: scale(0.7);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+}
+
+/* Fondo con gradiente animado */
+.bg-animated {
+  background: linear-gradient(
+    -45deg,
+    #2e1065,
+    #831843,
+    #4c1d95,
+    #1e3a8a,
+    #3b0764,
+    #701a75
+  );
+  background-size: 400% 400%;
+  animation: background-pan 18s ease infinite;
+}
+
+@keyframes background-pan {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.bg-animated::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 20% 15%,
+      rgba(251, 191, 36, 0.2),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 80%,
+      rgba(34, 211, 238, 0.18),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 70% 15%,
+      rgba(217, 70, 239, 0.2),
+      transparent 55%
+    );
+}
+
+/* Texto con degradado animado */
+.text-gradient {
+  background-image: linear-gradient(
+    90deg,
+    #fde047,
+    #f472b6,
+    #a78bfa,
+    #38bdf8,
+    #fde047
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient-text 5s linear infinite;
+}
+
+@keyframes gradient-text {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Destello superior de la tarjeta (glassmorphism) */
+.card-shine {
+  background: radial-gradient(
+    120% 100% at 50% 0%,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.07) 38%,
+    transparent 70%
+  );
+}
+
+/* Puntos brillantes decorativos */
+.glow-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: 0 0 12px 2px rgba(255, 255, 255, 0.6);
+}
+
+/* Globos flotantes */
+.balloon {
+  position: absolute;
+  bottom: -170px;
+  border-radius: 50% 50% 50% 50% / 46% 46% 54% 54%;
+  background: var(--color);
+  box-shadow:
+    inset -8px -10px 16px rgba(0, 0, 0, 0.18),
+    inset 6px 8px 12px rgba(255, 255, 255, 0.25);
+  animation: balloon-up var(--duration, 9s) linear var(--delay, 0s) infinite;
+  will-change: transform;
+}
+
+.balloon::before {
+  content: "";
+  position: absolute;
+  top: 12%;
+  left: 18%;
+  width: 24%;
+  height: 30%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: rotate(-18deg);
+}
+
+.balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 8px solid var(--color);
+}
+
+.balloon .string {
+  position: absolute;
+  top: 100%;
+  left: calc(50% - 1px);
+  width: 2px;
+  height: var(--string, 44px);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.75),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+@keyframes balloon-up {
+  0% {
+    transform: translate3d(var(--sway, 20px), 0, 0) rotate(-5deg);
+  }
+  50% {
+    transform: translate3d(calc(var(--sway, 20px) * -1), -55vh, 0) rotate(5deg);
+  }
+  100% {
+    transform: translate3d(var(--sway, 20px), -115vh, 0) rotate(-5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-animated,
+  .balloon,
+  .text-gradient,
+  .glow-dot,
+  .animate-bob,
+  .animate-pop-in,
+  .animate-twinkle {
+    animation: none !important;
+  }
+}
