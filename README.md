@@ -1,5 +1,11 @@
 # 🎉 Happy Birthday — Tarjeta de Cumpleaños Interactiva
 
+**Language / Idioma:** 🇪🇸 [Español](#-español) · 🇬🇧 [English](#-english)
+
+---
+
+## 🇪🇸 Español
+
 Aplicación web moderna y festiva para felicitar a alguien por su cumpleaños.
 Lee el nombre del festejado desde la URL, lanza confeti y muestra una tarjeta
 glassmorphism con globos animados, mensajes motivacionales y una sorpresa extra.
@@ -97,3 +103,106 @@ happy-birthday/
 - Fondo con gradiente animado, globos flotando y puntos brillantes (twinkle).
 - Respeto a `prefers-reduced-motion`.
 - Diseño 100% responsive centrado en un `max-w-md` (ideal para móviles).
+
+---
+
+## 🇬🇧 English
+
+A modern and festive web app for wishing someone a happy birthday. It reads the
+birthday person's name from the URL, fires confetti and shows a glassmorphism
+card with animated balloons, motivational messages and an extra surprise.
+
+### 🛠️ Tech Stack
+
+- **React 19** + **Vite 8**
+- **Tailwind CSS v4** (via `@tailwindcss/vite`)
+- **Lucide React** (icons)
+- **canvas-confetti** (confetti)
+
+### 🚀 Installation
+
+```bash
+# With pnpm
+pnpm install
+
+# With npm
+npm install
+
+# With yarn
+yarn install
+```
+
+> If the confetti library needs to be installed separately:
+>
+> ```bash
+> pnpm add canvas-confetti
+> # or
+> npm install canvas-confetti
+> # or
+> yarn add canvas-confetti
+> ```
+
+### ▶️ Usage
+
+```bash
+pnpm dev     # development at http://localhost:5173
+pnpm build   # production build into /dist
+pnpm preview # preview the build
+```
+
+### 🔗 How to pass the name via the URL
+
+The app reads the name using `URLSearchParams` on `window.location.search`:
+
+```js
+// src/App.jsx
+const params = new URLSearchParams(window.location.search)
+const raw = params.get('nombre') || params.get('name')
+```
+
+Valid links:
+
+```
+https://my-site.com/?nombre=John
+https://my-site.com/?nombre=John%20Doe           (encoded spaces and accents)
+https://my-site.com/?name=Maria
+https://my-site.com/                              (no name → shows "Amiga/o")
+```
+
+If neither `nombre` nor `name` is provided, the default name (**"Amiga/o"**)
+is shown. Changing the parameter in the URL and reloading updates the card
+instantly.
+
+### 📌 Note about names with spaces and accents
+
+When building the link in JavaScript use **`encodeURIComponent`** so the
+browser doesn't break the URL:
+
+```js
+const link = `https://my-site.com/?nombre=${encodeURIComponent('María José')}`
+```
+
+### 📁 Project structure
+
+```
+happy-birthday/
+├── index.html                 # Title, fonts (Baloo 2 + Quicksand) and basic SEO
+├── vite.config.js             # React + Tailwind plugins
+└── src/
+    ├── main.jsx               # Entry point
+    ├── App.jsx                # Reads ?nombre=, background, balloons, twinkles and initial confetti
+    ├── index.css              # Tailwind v4, theme, keyframes and custom styles
+    ├── components/
+    │   ├── BirthdayCard.jsx   # Glassmorphism card with surprise button
+    │   └── Balloons.jsx       # Floating balloons with CSS animation
+    └── utils/
+        └── confetti.js        # fireInitialConfetti() and fireCelebration()
+```
+
+### ✨ Features
+
+- Automatic confetti on page load + extra confetti when the button is pressed.
+- **"¡Abrir sorpresa!"** button that reveals a panel with motivational wishes.
+- Animated gradient background, floating balloons and twinkling dots.
+- Respects `prefers-reduced-motion`.
+- Fully responsive layout centered on a `max-w-md` (ideal for mobile).
